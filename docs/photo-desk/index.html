@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Photo desk · gastrosurgeonodisha.com</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<style>
+  :root { color-scheme: dark; --bg: #060709; --card: #0D0F13; --line: rgba(239, 235, 227, .16); --fg: #EFEBE3; --mut: #BAB5AB; --red: #D81E36; --blue: #8EBBFF; }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 16px 120px; display: grid; gap: 20px; }
+  header { display: flex; align-items: center; gap: 14px; }
+  header img { width: 52px; height: 52px; border-radius: 50%; background: #fff; padding: 2px; }
+  h1 { margin: 0; font-size: 1.5rem; line-height: 1.1; }
+  p { margin: 0; }
+  .mut { color: var(--mut); }
+  .card { background: var(--card); border: 1px solid var(--line); padding: 20px; display: grid; gap: 14px; }
+  label { font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+  input[type=password], input[type=text] { width: 100%; min-height: 48px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); color: var(--fg); font: inherit; }
+  input:focus { outline: 0; border-color: var(--blue); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); font: 700 13px/1 inherit; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+  .btn.red { background: var(--red); border-color: var(--red); color: #fff; }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  li { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px; background: var(--bg); border: 1px solid var(--line); }
+  li img { width: 76px; height: 76px; object-fit: cover; background: #161A20; }
+  li.busy { opacity: .55; }
+  .tools { display: flex; gap: 6px; }
+  .tools button { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--fg); font-size: 18px; cursor: pointer; }
+  .tools button:disabled { opacity: .3; }
+  .tools .del:hover { border-color: var(--red); color: #FF4D61; }
+  #status { min-height: 1.5em; color: var(--blue); }
+  #status.err { color: #FF4D61; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(6, 7, 9, .96); border-top: 1px solid var(--line); }
+  .bar .row { max-width: 860px; margin: 0 auto; justify-content: space-between; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  @media (max-width: 560px) { li { grid-template-columns: 64px minmax(0, 1fr); } li img { width: 64px; height: 64px; grid-row: span 2; } .tools { grid-column: 2; } }
+</style>
+</head>
+<body>
+<main>
+  <header><img src="/assets/clinic-logo.webp" alt=""><div><h1>Gallery photo desk</h1><p class="mut">Private page for updating the gallery on gastrosurgeonodisha.com</p></div></header>
+
+  <section class="card" id="login">
+    <label for="pw">Password</label>
+    <input type="password" id="pw" autocomplete="current-password">
+    <div class="row"><button class="btn red" id="enter" type="button">Open the photo desk</button></div>
+    <p class="mut" id="login-msg"></p>
+  </section>
+
+  <section class="card" id="desk" hidden>
+    <p class="mut">Add photos, write a short caption, use the arrows to set the order, then press <strong>Publish</strong>. Changes go live on the website straight away. A caption like <em>Award 2027 / Name of the award</em> shows "Award 2027" as a small red label.</p>
+    <ol id="list"></ol>
+    <div class="row">
+      <label class="btn" for="file">Add photos</label>
+      <input class="sr" type="file" id="file" accept="image/jpeg,image/png,image/webp" multiple>
+    </div>
+  </section>
+</main>
+<div class="bar" id="bar" hidden><div class="row"><p id="status" role="status" aria-live="polite"></p><button class="btn red" id="publish" type="button">Publish</button></div></div>
+
+<script>
+(function () {
+  'use strict';
+  var API = '/api/gallery', key = '', items = [], busy = 0, dirty = false;
+  var $ = function (id) { return document.getElementById(id); };
+  function status(t, err) { $('status').textContent = t || ''; $('status').classList.toggle('err', !!err); }
+  function srcOf(it) { return it.preview || (it.id ? API + '?img=' + it.id : it.src); }
+  function post(body) {
+    return fetch(API, { method: 'POST', headers: { 'content-type': 'application/json', 'x-gallery-key': key }, body: JSON.stringify(Object.assign({ key: key }, body)) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw j; return j; }); });
+  }
+  function load() {
+    return fetch(API, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : { items: null }; }).catch(function () { return { items: null }; }).then(function (j) {
+      if (j.items && j.items.length) return j.items;
+      return fetch('/gallery.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (list) {
+        return list.map(function (x) { return { src: (x.src || '').replace(/^(?!\/)/, '/'), cap: x.caption || '' }; });
+      }).catch(function () { return []; });
+    });
+  }
+  function render() {
+    var ol = $('list'); ol.innerHTML = '';
+    items.forEach(function (it, i) {
+      var li = document.createElement('li'); if (it.busy) li.className = 'busy';
+      var im = document.createElement('img'); im.alt = ''; im.src = srcOf(it);
+      var cap = document.createElement('input'); cap.type = 'text'; cap.maxLength = 120; cap.value = it.cap || ''; cap.placeholder = 'Caption';
+      cap.setAttribute('aria-label', 'Caption for photo ' + (i + 1));
+      cap.addEventListener('input', function () { it.cap = cap.value; dirty = true; status('Not published yet.'); });
+      var t = document.createElement('div'); t.className = 'tools';
+      function b(txt, label, dis, fn, cls) { var x = document.createElement('button'); x.type = 'button'; x.textContent = txt; x.setAttribute('aria-label', label); x.disabled = dis; if (cls) x.className = cls; x.addEventListener('click', fn); t.appendChild(x); }
+      b('↑', 'Move up', i === 0, function () { items.splice(i - 1, 0, items.splice(i, 1)[0]); dirty = true; render(); status('Not published yet.'); });
+      b('↓', 'Move down', i === items.length - 1, function () { items.splice(i + 1, 0, items.splice(i, 1)[0]); dirty = true; render(); status('Not published yet.'); });
+      b('×', 'Remove', false, function () { items.splice(i, 1); dirty = true; render(); status('Not published yet.'); }, 'del');
+      li.appendChild(im); li.appendChild(cap); li.appendChild(t); ol.appendChild(li);
+    });
+  }
+  function shrink(file) {
+    return new Promise(function (res, rej) {
+      var url = URL.createObjectURL(file), im = new Image();
+      im.onload = function () {
+        var k = Math.min(1, 1800 / Math.max(im.naturalWidth, im.naturalHeight)), c = document.createElement('canvas');
+        c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k);
+        var x = c.getContext('2d'); x.fillStyle = '#0D0F13'; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(function (b) { b ? res(b) : rej({ error: 'resize' }); }, 'image/jpeg', 0.86);
+      };
+      im.onerror = function () { URL.revokeObjectURL(url); rej({ error: 'unreadable' }); };
+      im.src = url;
+    });
+  }
+  function b64(blob) { return new Promise(function (res) { var r = new FileReader(); r.onload = function () { res(String(r.result).split(',')[1]); }; r.readAsDataURL(blob); }); }
+  $('enter').addEventListener('click', function () {
+    key = $('pw').value; $('login-msg').textContent = 'Checking…';
+    post({ op: 'check' }).then(function () {
+      try { sessionStorage.setItem('pnp-desk', key); } catch (e) {}
+      return load().then(function (list) { items = list; $('login').hidden = true; $('desk').hidden = false; $('bar').hidden = false; render(); status(''); });
+    }).catch(function (e) {
+      $('login-msg').textContent = e && e.error === 'wrong-password' ? 'Wrong password.' : e && e.error === 'no-password-set' ? 'No password is set yet in Netlify (GALLERY_PASSWORD).' : 'The photo desk is not available on this copy of the site.';
+    });
+  });
+  $('pw').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('enter').click(); });
+  try { var saved = sessionStorage.getItem('pnp-desk'); if (saved) { $('pw').value = saved; $('enter').click(); } } catch (e) {}
+  $('file').addEventListener('change', function () {
+    var files = Array.prototype.slice.call($('file').files || []); $('file').value = '';
+    files.forEach(function (f) {
+      var it = { busy: true, cap: '', preview: URL.createObjectURL(f) };
+      items.push(it); busy++; dirty = true; render(); status('Uploading…');
+      shrink(f).then(function (blob) { return b64(blob); }).then(function (data) { return post({ op: 'upload', type: 'image/jpeg', data: data }); })
+        .then(function (r) { if (r.src) it.src = r.src; else it.id = r.id; it.busy = false; })
+        .catch(function () { items.splice(items.indexOf(it), 1); status('A photo could not be uploaded. Try again.', true); })
+        .then(function () { busy--; render(); if (!busy && !$('status').classList.contains('err')) status('Uploaded. Press Publish to show them on the website.'); });
+    });
+  });
+  $('publish').addEventListener('click', function () {
+    if (busy) { status('Wait for the uploads to finish.', true); return; }
+    $('publish').disabled = true; status('Publishing…');
+    var out = items.map(function (x) { var cap = String(x.cap || '').trim(); return x.id ? { id: x.id, cap: cap } : { src: x.src, cap: cap }; });
+    post({ op: 'save', items: out }).then(function () { dirty = false; status('Published. The gallery on the website is updated.'); })
+      .catch(function () { status('Could not publish. Check the connection and try again.', true); })
+      .then(function () { $('publish').disabled = false; });
+  });
+  window.addEventListener('beforeunload', function (e) { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+})();
+</script>
+</body>
+</html>

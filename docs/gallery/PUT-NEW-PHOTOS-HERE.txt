@@ -1,0 +1,4 @@
+Put new gallery photos in this folder (JPEG or WebP, about 1600-2000 px on the long side),
+then add a line for each one in gallery.json, for example:
+  { "src": "gallery/award-2027.jpg", "caption": "Award 2027 / Name of the award" },
+Text before " / " shows as a small red label above the caption.

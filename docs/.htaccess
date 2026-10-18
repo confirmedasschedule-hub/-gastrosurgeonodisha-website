@@ -1,0 +1,47 @@
+# Apache (.htaccess) for GoDaddy cPanel hosting. Not needed on Netlify.
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# always https://www.gastrosurgeonodisha.com
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^ https://www.gastrosurgeonodisha.com%{REQUEST_URI} [L,R=301]
+
+# hidden photo desk storage (PHP)
+RewriteRule ^api/gallery/?$ api/gallery.php [L,QSA]
+
+# old WordPress pages -> matching section
+RewriteRule ^(my-services|superspeciality-services|expertise|expertise-in|gastro-surgery|laparoscopic-surgery|endoscopic-surgery|liver-surgery|liver-surgery-2|gi-onco-surgery|liver-transplant|pancreas-surgery|pancreas-surgery-2|gallbladder-surgery|gall-bladder-bile-duct-surgery|colorectal-surgery|colorectal-surgery-2|upper-gi-esophagus-stomach-surgery|upper-gi-esophagus-stomach-surgery-2|laparoscopic-gallstone-surgery|whipple-surgery-for-pancreatic-cancer|fundoplication-of-gerd|endoscopy|colonoscopy|laser-surgery|video-consultation|why-dr-premananda-patnaik-is-considered-the-best-laparoscopy-surgeon-in-bhubaneswar|understanding-the-advantages-of-laparoscopic-surgery-with-dr-premananda-patnaik-in-bhubaneswar|expert-colorectal-surgery-in-bhubaneswar-why-drpremgastro-is-the-trusted-choice|understanding-colorectal-surgery-a-comprehensive-guide-by-drpremgastro-in-bhubaneswar)/?$ /?go=expertise [R=301,L]
+RewriteRule ^(diseases-treated|digestive-diseases|esophagus-food-pipe-cancer|stomach-cancer|colorectal-cancer|liver-cancer|gall-bladder-cancer|pancreatic-cancer|bile-duct-cancer|liver-abscess|hydatid-cyst|pancreas-pseudo-cyst|portal-hypertension|gastritis-gerd|jaundice|hepatitis|liver-cirrhosis|ibs|ibd|blood-vomiting|black-stool|piles|gall-stone|appendicitis|hernia|acute-pancreatitis|chronic-pancreatitis|fatty-liver|liver-failure|fissure|fistula|liver-cyst|bile-duct-stricture|ulcerative-colitis|corrosive-stricture|gall-bladder-polyp|gall-bladder-polyp-2|achalasia-cardia|gastric-outlet-obstruction|colon-cancer|colon-polyp|crohns-disease|bile-duct-stone)/?$ /?go=diseases [R=301,L]
+RewriteRule ^(about-1|about-2|about-3|experience|fellowships-obtained|membership-of-association-council|area-of-interest|papers-published-in-journals|grants-and-bursaries-received|why-dr-premananda-patnaik-is-the-best-gastroenterologist-in-bhubaneswar-a-patients-guide-to-gi-care)/?$ /?go=about [R=301,L]
+RewriteRule ^(journey-so-far)/?$ /?go=journey [R=301,L]
+RewriteRule ^(awards-recognitions|case-studies)/?$ /?go=stories [R=301,L]
+RewriteRule ^(newspaper-social-media|paper-presentation|news|video)/?$ /?go=news [R=301,L]
+RewriteRule ^(blog-grid|blog-masonry|blog-standary|blog-grid-2)/?$ /?go=blogs [R=301,L]
+RewriteRule ^(faqs)/?$ /?go=query [R=301,L]
+RewriteRule ^(contact|book-appointment)/?$ /?go=contact [R=301,L]
+RewriteRule ^(best-cancer-doctor-in-bhubaneswar-why-dr-premananda-patnaik-is-the-top-choice-for-cancer-treatment|top-cancer-surgeon-in-bhubaneswar-why-drpremgastro-is-your-best-choice-for-cancer)/?$ /?read=1 [R=301,L]
+RewriteRule ^(comprehensive-cancer-care-in-bhubaneswar-how-dr-premananda-patnaik-is-changing-lives)/?$ /?read=2 [R=301,L]
+
+# old WordPress system addresses and spam pages: not found (410 tells Google they are gone for good)
+RewriteRule ^(wp-admin|wp-content|wp-includes|feed|category|tag|author)(/.*)?$ - [G,L]
+RewriteRule ^(wp-login\.php|xmlrpc\.php)$ - [G,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+Header set X-Content-Type-Options "nosniff"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/webp "access plus 7 days"
+ExpiresByType image/jpeg "access plus 7 days"
+ExpiresByType image/png "access plus 7 days"
+ExpiresByType text/html "access plus 0 seconds"
+ExpiresByType application/json "access plus 0 seconds"
+</IfModule>

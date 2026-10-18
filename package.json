@@ -1,0 +1,9 @@
+{
+  "name": "drpremgastro-website",
+  "private": true,
+  "description": "Dr. Premananda Patnaik website. Static site in /site; gallery photo storage function in /netlify/functions.",
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

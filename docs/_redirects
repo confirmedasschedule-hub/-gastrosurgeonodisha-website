@@ -1,0 +1,123 @@
+# Netlify redirects for drpremgastro.com
+# The old WordPress pages now live as sections of one page. Each old address sends visitors
+# (and Google) to the matching section. Every other old address, including the thousands of
+# spam pages the hackers added, gets the "page not found" page, so Google drops them.
+
+# expertise
+/my-services/  /?go=expertise  301
+/superspeciality-services/  /?go=expertise  301
+/expertise/  /?go=expertise  301
+/expertise-in/  /?go=expertise  301
+/gastro-surgery/  /?go=expertise  301
+/laparoscopic-surgery/  /?go=expertise  301
+/endoscopic-surgery/  /?go=expertise  301
+/liver-surgery/  /?go=expertise  301
+/liver-surgery-2/  /?go=expertise  301
+/gi-onco-surgery/  /?go=expertise  301
+/liver-transplant/  /?go=expertise  301
+/pancreas-surgery/  /?go=expertise  301
+/pancreas-surgery-2/  /?go=expertise  301
+/gallbladder-surgery/  /?go=expertise  301
+/gall-bladder-bile-duct-surgery/  /?go=expertise  301
+/colorectal-surgery/  /?go=expertise  301
+/colorectal-surgery-2/  /?go=expertise  301
+/upper-gi-esophagus-stomach-surgery/  /?go=expertise  301
+/upper-gi-esophagus-stomach-surgery-2/  /?go=expertise  301
+/laparoscopic-gallstone-surgery/  /?go=expertise  301
+/whipple-surgery-for-pancreatic-cancer/  /?go=expertise  301
+/fundoplication-of-gerd/  /?go=expertise  301
+/endoscopy/  /?go=expertise  301
+/colonoscopy/  /?go=expertise  301
+/laser-surgery/  /?go=expertise  301
+/video-consultation/  /?go=expertise  301
+/why-dr-premananda-patnaik-is-considered-the-best-laparoscopy-surgeon-in-bhubaneswar/  /?go=expertise  301
+/understanding-the-advantages-of-laparoscopic-surgery-with-dr-premananda-patnaik-in-bhubaneswar/  /?go=expertise  301
+/expert-colorectal-surgery-in-bhubaneswar-why-drpremgastro-is-the-trusted-choice/  /?go=expertise  301
+/understanding-colorectal-surgery-a-comprehensive-guide-by-drpremgastro-in-bhubaneswar/  /?go=expertise  301
+# diseases
+/diseases-treated/  /?go=diseases  301
+/digestive-diseases/  /?go=diseases  301
+/esophagus-food-pipe-cancer/  /?go=diseases  301
+/stomach-cancer/  /?go=diseases  301
+/colorectal-cancer/  /?go=diseases  301
+/liver-cancer/  /?go=diseases  301
+/gall-bladder-cancer/  /?go=diseases  301
+/pancreatic-cancer/  /?go=diseases  301
+/bile-duct-cancer/  /?go=diseases  301
+/liver-abscess/  /?go=diseases  301
+/hydatid-cyst/  /?go=diseases  301
+/pancreas-pseudo-cyst/  /?go=diseases  301
+/portal-hypertension/  /?go=diseases  301
+/gastritis-gerd/  /?go=diseases  301
+/jaundice/  /?go=diseases  301
+/hepatitis/  /?go=diseases  301
+/liver-cirrhosis/  /?go=diseases  301
+/ibs/  /?go=diseases  301
+/ibd/  /?go=diseases  301
+/blood-vomiting/  /?go=diseases  301
+/black-stool/  /?go=diseases  301
+/piles/  /?go=diseases  301
+/gall-stone/  /?go=diseases  301
+/appendicitis/  /?go=diseases  301
+/hernia/  /?go=diseases  301
+/acute-pancreatitis/  /?go=diseases  301
+/chronic-pancreatitis/  /?go=diseases  301
+/fatty-liver/  /?go=diseases  301
+/liver-failure/  /?go=diseases  301
+/fissure/  /?go=diseases  301
+/fistula/  /?go=diseases  301
+/liver-cyst/  /?go=diseases  301
+/bile-duct-stricture/  /?go=diseases  301
+/ulcerative-colitis/  /?go=diseases  301
+/corrosive-stricture/  /?go=diseases  301
+/gall-bladder-polyp/  /?go=diseases  301
+/gall-bladder-polyp-2/  /?go=diseases  301
+/achalasia-cardia/  /?go=diseases  301
+/gastric-outlet-obstruction/  /?go=diseases  301
+/colon-cancer/  /?go=diseases  301
+/colon-polyp/  /?go=diseases  301
+/crohns-disease/  /?go=diseases  301
+/bile-duct-stone/  /?go=diseases  301
+# about
+/about-1/  /?go=about  301
+/about-2/  /?go=about  301
+/about-3/  /?go=about  301
+/experience/  /?go=about  301
+/fellowships-obtained/  /?go=about  301
+/membership-of-association-council/  /?go=about  301
+/area-of-interest/  /?go=about  301
+/papers-published-in-journals/  /?go=about  301
+/grants-and-bursaries-received/  /?go=about  301
+/why-dr-premananda-patnaik-is-the-best-gastroenterologist-in-bhubaneswar-a-patients-guide-to-gi-care/  /?go=about  301
+# journey
+/journey-so-far/  /?go=journey  301
+# stories
+/awards-recognitions/  /?go=stories  301
+/case-studies/  /?go=stories  301
+# news
+/newspaper-social-media/  /?go=news  301
+/paper-presentation/  /?go=news  301
+/news/  /?go=news  301
+/video/  /?go=news  301
+# blogs
+/blog-grid/  /?go=blogs  301
+/blog-masonry/  /?go=blogs  301
+/blog-standary/  /?go=blogs  301
+/blog-grid-2/  /?go=blogs  301
+# query
+/faqs/  /?go=query  301
+# contact
+/contact/  /?go=contact  301
+/book-appointment/  /?go=contact  301
+# old blog posts -> the same article inside the new site
+/best-cancer-doctor-in-bhubaneswar-why-dr-premananda-patnaik-is-the-top-choice-for-cancer-treatment/  /?read=1  301
+/top-cancer-surgeon-in-bhubaneswar-why-drpremgastro-is-your-best-choice-for-cancer/  /?read=1  301
+/comprehensive-cancer-care-in-bhubaneswar-how-dr-premananda-patnaik-is-changing-lives/  /?read=2  301
+
+# old WordPress system addresses: not found
+/wp-admin/*      /404.html  404
+/wp-content/*    /404.html  404
+/wp-includes/*   /404.html  404
+/wp-login.php    /404.html  404
+/xmlrpc.php      /404.html  404
+/feed/*          /404.html  404

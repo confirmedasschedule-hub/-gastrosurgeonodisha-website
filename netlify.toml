@@ -1,0 +1,9 @@
+# Netlify settings for drpremgastro.com
+# The website is in the "site" folder. The "netlify/functions" folder holds the small
+# program behind the hidden photo page (/photo-desk), which stores gallery photos.
+[build]
+  publish = "docs"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"

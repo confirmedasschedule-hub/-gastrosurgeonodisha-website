@@ -4,60 +4,99 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Photo desk · gastrosurgeonodisha.com</title>
+<title>Photo desk</title>
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <style>
-  :root { color-scheme: dark; --bg: #060709; --card: #0D0F13; --line: rgba(239, 235, 227, .16); --fg: #EFEBE3; --mut: #BAB5AB; --red: #D81E36; --blue: #8EBBFF; }
+  :root { color-scheme: dark; --bg: #060709; --card: #0D0F13; --line: rgba(239, 235, 227, .16); --fg: #EFEBE3; --mut: #BAB5AB; --red: #D81E36; --blue: #8EBBFF; --ok: #7FD69A; }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
-  main { max-width: 860px; margin: 0 auto; padding: 32px 16px 120px; display: grid; gap: 20px; }
+  main { max-width: 860px; margin: 0 auto; padding: 28px 16px 140px; display: grid; gap: 20px; }
   header { display: flex; align-items: center; gap: 14px; }
-  header img { width: 52px; height: 52px; border-radius: 50%; background: #fff; padding: 2px; }
-  h1 { margin: 0; font-size: 1.5rem; line-height: 1.1; }
+  header img { width: 52px; height: 52px; border-radius: 50%; background: #fff; padding: 2px; flex: none; }
+  h1 { margin: 0; font-size: 1.45rem; line-height: 1.15; }
+  h2 { margin: 0; font-size: 1.1rem; }
   p { margin: 0; }
+  a { color: var(--blue); }
   .mut { color: var(--mut); }
-  .card { background: var(--card); border: 1px solid var(--line); padding: 20px; display: grid; gap: 14px; }
+  .small { font-size: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); padding: 20px; display: grid; gap: 14px; border-radius: 6px; }
   label { font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+  .fld { display: grid; gap: 6px; }
   input[type=password], input[type=text] { width: 100%; min-height: 48px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); color: var(--fg); font: inherit; }
   input:focus { outline: 0; border-color: var(--blue); }
-  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); font: 700 13px/1 inherit; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); font: 700 13px/1 inherit; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; text-decoration: none; }
   .btn.red { background: var(--red); border-color: var(--red); color: #fff; }
   .btn:disabled { opacity: .45; cursor: default; }
+  .link { background: none; border: 0; padding: 0; color: var(--blue); font: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }
   .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  li { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px; background: var(--bg); border: 1px solid var(--line); }
-  li img { width: 76px; height: 76px; object-fit: cover; background: #161A20; }
-  li.busy { opacity: .55; }
+  ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; color: var(--mut); font-size: 15px; }
+  ol.steps b { color: var(--fg); }
+  #list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  #list li { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; }
+  #list li img { width: 76px; height: 76px; object-fit: cover; background: #161A20; border-radius: 3px; }
+  #list li.busy { opacity: .55; }
+  .new { display: inline-block; margin-left: 6px; font-size: 11px; font-weight: 700; color: var(--ok); letter-spacing: .06em; text-transform: uppercase; }
   .tools { display: flex; gap: 6px; }
   .tools button { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--fg); font-size: 18px; cursor: pointer; }
   .tools button:disabled { opacity: .3; }
   .tools .del:hover { border-color: var(--red); color: #FF4D61; }
-  #status { min-height: 1.5em; color: var(--blue); }
-  #status.err { color: #FF4D61; }
+  .msg { min-height: 1.4em; font-size: 15px; }
+  .msg.err, #status.err { color: #FF4D61; }
+  #status { min-height: 1.5em; color: var(--blue); font-size: 15px; }
   .bar { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(6, 7, 9, .96); border-top: 1px solid var(--line); }
-  .bar .row { max-width: 860px; margin: 0 auto; justify-content: space-between; }
+  .bar .row { max-width: 860px; margin: 0 auto; justify-content: space-between; flex-wrap: nowrap; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  @media (max-width: 560px) { li { grid-template-columns: 64px minmax(0, 1fr); } li img { width: 64px; height: 64px; grid-row: span 2; } .tools { grid-column: 2; } }
+  @media (max-width: 560px) { #list li { grid-template-columns: 64px minmax(0, 1fr); } #list li img { width: 64px; height: 64px; grid-row: span 2; } .tools { grid-column: 2; } }
 </style>
 </head>
 <body>
 <main>
-  <header><img src="/assets/clinic-logo.webp" alt=""><div><h1>Gallery photo desk</h1><p class="mut">Private page for updating the gallery on gastrosurgeonodisha.com</p></div></header>
+  <header><img src="/assets/clinic-logo.webp" alt=""><div><h1>Gallery photo desk</h1><p class="mut small">Private page for updating the website gallery</p></div></header>
 
-  <section class="card" id="login">
-    <label for="pw">Password</label>
-    <input type="password" id="pw" autocomplete="current-password">
+  <p class="card msg err" id="insecure" hidden>Open this page with <b>https://</b> at the start of the address. The photo desk only works on a secure connection.</p>
+
+  <!-- 1. Normal login -->
+  <section class="card" id="login" hidden>
+    <div class="fld"><label for="pw">Password</label><input type="password" id="pw" autocomplete="current-password"></div>
     <div class="row"><button class="btn red" id="enter" type="button">Open the photo desk</button></div>
-    <p class="mut" id="login-msg"></p>
+    <p class="msg" id="login-msg" role="status"></p>
+    <p class="mut small">Website owner: <button class="link" type="button" id="to-setup">set up the photo desk again with a new GitHub key</button></p>
   </section>
 
+  <!-- 2. One-time setup by the website owner -->
+  <section class="card" id="setup" hidden>
+    <h2>One-time setup</h2>
+    <p class="mut small">The website owner does this once. You need a GitHub "key" that lets this page change the gallery, then you choose the password that the photo person will use.</p>
+    <ol class="steps">
+      <li>On a computer, log in to GitHub and open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>
+      <li><b>Token name:</b> photo desk. <b>Expiration:</b> No expiration (or the longest offered).</li>
+      <li><b>Repository access:</b> Only select repositories → choose <b id="repo-name"></b></li>
+      <li><b>Permissions → Repository permissions → Contents:</b> Read and write.</li>
+      <li>Click <b>Generate token</b>, copy it (it starts with <b>github_pat_</b>) and paste it below.</li>
+    </ol>
+    <div class="fld"><label for="tok">GitHub key</label><input type="password" id="tok" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></div>
+    <div class="fld"><label for="np1">New photo desk password</label><input type="password" id="np1" autocomplete="new-password" placeholder="At least 10 characters"></div>
+    <div class="fld"><label for="np2">Type the password again</label><input type="password" id="np2" autocomplete="new-password"></div>
+    <div class="row"><button class="btn red" id="do-setup" type="button">Save and open the desk</button><button class="link" type="button" id="to-login" hidden>Back to login</button></div>
+    <p class="msg" id="setup-msg" role="status"></p>
+    <p class="mut small">The key is stored on the website only in locked (encrypted) form. It can be opened only with the password. To cut off access at any time, delete the token on GitHub.</p>
+  </section>
+
+  <!-- 3. The desk -->
   <section class="card" id="desk" hidden>
-    <p class="mut">Add photos, write a short caption, use the arrows to set the order, then press <strong>Publish</strong>. Changes go live on the website straight away. A caption like <em>Award 2027 / Name of the award</em> shows "Award 2027" as a small red label.</p>
+    <p class="mut">Add photos, write a short caption, use the arrows to set the order, then press <strong>Publish</strong>. The website updates about 1–2 minutes later. A caption like <em>Award 2027 / Name of the award</em> shows "Award 2027" as a small red label.</p>
     <ol id="list"></ol>
     <div class="row">
-      <label class="btn" for="file">Add photos</label>
-      <input class="sr" type="file" id="file" accept="image/jpeg,image/png,image/webp" multiple>
+      <label class="btn" for="file">+ Add photos</label>
+      <input class="sr" type="file" id="file" accept="image/*" multiple>
+    </div>
+    <p class="mut small"><button class="link" type="button" id="chg-pw">Change password</button> · <button class="link" type="button" id="logout">Log out</button></p>
+    <div id="chg" hidden class="card">
+      <div class="fld"><label for="cp1">New password</label><input type="password" id="cp1" autocomplete="new-password" placeholder="At least 10 characters"></div>
+      <div class="fld"><label for="cp2">Type it again</label><input type="password" id="cp2" autocomplete="new-password"></div>
+      <div class="row"><button class="btn" id="do-chg" type="button">Save new password</button></div>
+      <p class="msg" id="chg-msg" role="status"></p>
     </div>
   </section>
 </main>
@@ -66,38 +105,89 @@
 <script>
 (function () {
   'use strict';
-  var API = '/api/gallery', key = '', items = [], busy = 0, dirty = false;
+  // ---- where the website lives on GitHub ----
+  var OWNER = 'confirmedasschedule-hub', REPO = '-gastrosurgeonodisha-website', BRANCH = 'main', DIR = 'docs';
+  var API = 'https://api.github.com/repos/' + OWNER + '/' + REPO;
+  var KEY_PATH = DIR + '/photo-desk/key.json', LIST_PATH = DIR + '/gallery.json', IMG_DIR = DIR + '/gallery/';
+  var ITER = 600000;
+
   var $ = function (id) { return document.getElementById(id); };
-  function status(t, err) { $('status').textContent = t || ''; $('status').classList.toggle('err', !!err); }
-  function srcOf(it) { return it.preview || (it.id ? API + '?img=' + it.id : it.src); }
-  function post(body) {
-    return fetch(API, { method: 'POST', headers: { 'content-type': 'application/json', 'x-gallery-key': key }, body: JSON.stringify(Object.assign({ key: key }, body)) })
-      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw j; return j; }); });
+  var token = '', keyFile = null, items = [], removed = [], busy = 0, dirty = false;
+  $('repo-name').textContent = OWNER + '/' + REPO;
+
+  // ---------- helpers ----------
+  function show(id) { ['login', 'setup', 'desk'].forEach(function (s) { $(s).hidden = s !== id; }); $('bar').hidden = id !== 'desk'; }
+  function say(id, t, err) { var el = $(id); el.textContent = t || ''; el.classList.toggle('err', !!err); }
+  function status(t, err) { say('status', t, err); }
+  function b64e(buf) { var s = '', a = new Uint8Array(buf); for (var i = 0; i < a.length; i += 0x8000) s += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000)); return btoa(s); }
+  function b64d(str) { var s = atob(str.replace(/\s/g, '')), a = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i); return a; }
+  function utf8b64(text) { return b64e(new TextEncoder().encode(text)); }
+
+  function gh(path, opt) {
+    opt = opt || {};
+    var h = { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+    if (token) h.Authorization = 'Bearer ' + token;
+    if (opt.body) h['Content-Type'] = 'application/json';
+    return fetch(API + path, { method: opt.method || 'GET', headers: h, body: opt.body ? JSON.stringify(opt.body) : undefined, cache: 'no-store' })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { j.status = r.status; throw j; } return j; }); });
   }
-  function load() {
-    return fetch(API, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : { items: null }; }).catch(function () { return { items: null }; }).then(function (j) {
-      if (j.items && j.items.length) return j.items;
-      return fetch('/gallery.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (list) {
-        return list.map(function (x) { return { src: (x.src || '').replace(/^(?!\/)/, '/'), cap: x.caption || '' }; });
-      }).catch(function () { return []; });
+
+  // ---------- encryption of the GitHub key with the password ----------
+  function derive(pw, salt) {
+    return crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']).then(function (base) {
+      return crypto.subtle.deriveKey({ name: 'PBKDF2', salt: salt, iterations: ITER, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+    });
+  }
+  function lock(tok, pw) {
+    var salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+    return derive(pw, salt).then(function (k) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, new TextEncoder().encode(tok)); })
+      .then(function (ct) { return { v: 1, iter: ITER, salt: b64e(salt), iv: b64e(iv), data: b64e(ct) }; });
+  }
+  function unlock(kf, pw) {
+    return derive(pw, b64d(kf.salt)).then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64d(kf.iv) }, k, b64d(kf.data)); })
+      .then(function (pt) { return new TextDecoder().decode(pt); });
+  }
+  function saveKeyFile(kf, message) {
+    var body = { message: message, content: utf8b64(JSON.stringify(kf, null, 2) + '\n'), branch: BRANCH };
+    return gh('/contents/' + KEY_PATH + '?ref=' + BRANCH).then(function (cur) { body.sha = cur.sha; }, function () {})
+      .then(function () { return gh('/contents/' + KEY_PATH, { method: 'PUT', body: body }); });
+  }
+
+  // ---------- gallery list ----------
+  function loadList() {
+    return gh('/contents/' + LIST_PATH + '?ref=' + BRANCH).then(function (j) {
+      var list = JSON.parse(new TextDecoder().decode(b64d(j.content)));
+      items = list.map(function (x) { var src = String(x.src || ''); if (src && !/^(\/|https?:)/.test(src)) src = '/' + src; return { src: src, cap: x.caption || '' }; });
+      removed = []; dirty = false; render(); status('');
     });
   }
   function render() {
     var ol = $('list'); ol.innerHTML = '';
+    if (!items.length) { var e = document.createElement('li'); e.innerHTML = '<span></span><span class="mut">No photos yet. Tap "Add photos".</span>'; ol.appendChild(e); }
     items.forEach(function (it, i) {
       var li = document.createElement('li'); if (it.busy) li.className = 'busy';
-      var im = document.createElement('img'); im.alt = ''; im.src = srcOf(it);
-      var cap = document.createElement('input'); cap.type = 'text'; cap.maxLength = 120; cap.value = it.cap || ''; cap.placeholder = 'Caption';
+      var im = document.createElement('img'); im.alt = ''; im.src = it.preview || it.src; im.loading = 'lazy';
+      var box = document.createElement('div');
+      var cap = document.createElement('input'); cap.type = 'text'; cap.maxLength = 140; cap.value = it.cap || ''; cap.placeholder = 'Caption';
       cap.setAttribute('aria-label', 'Caption for photo ' + (i + 1));
-      cap.addEventListener('input', function () { it.cap = cap.value; dirty = true; status('Not published yet.'); });
+      cap.addEventListener('input', function () { it.cap = cap.value; touch(); });
+      box.appendChild(cap);
+      if (it.blob) { var n = document.createElement('span'); n.className = 'new'; n.textContent = it.busy ? 'Uploading…' : 'New'; box.appendChild(n); }
       var t = document.createElement('div'); t.className = 'tools';
       function b(txt, label, dis, fn, cls) { var x = document.createElement('button'); x.type = 'button'; x.textContent = txt; x.setAttribute('aria-label', label); x.disabled = dis; if (cls) x.className = cls; x.addEventListener('click', fn); t.appendChild(x); }
-      b('↑', 'Move up', i === 0, function () { items.splice(i - 1, 0, items.splice(i, 1)[0]); dirty = true; render(); status('Not published yet.'); });
-      b('↓', 'Move down', i === items.length - 1, function () { items.splice(i + 1, 0, items.splice(i, 1)[0]); dirty = true; render(); status('Not published yet.'); });
-      b('×', 'Remove', false, function () { items.splice(i, 1); dirty = true; render(); status('Not published yet.'); }, 'del');
-      li.appendChild(im); li.appendChild(cap); li.appendChild(t); ol.appendChild(li);
+      b('↑', 'Move up', i === 0, function () { items.splice(i - 1, 0, items.splice(i, 1)[0]); touch(); render(); });
+      b('↓', 'Move down', i === items.length - 1, function () { items.splice(i + 1, 0, items.splice(i, 1)[0]); touch(); render(); });
+      b('×', 'Remove', false, function () {
+        var gone = items.splice(i, 1)[0];
+        if (!gone.blob && gone.src.indexOf('/gallery/') === 0) removed.push(gone.src);
+        touch(); render();
+      }, 'del');
+      li.appendChild(im); li.appendChild(box); li.appendChild(t); ol.appendChild(li);
     });
   }
+  function touch() { dirty = true; status('Not published yet. Press Publish when ready.'); }
+
+  // ---------- photos ----------
   function shrink(file) {
     return new Promise(function (res, rej) {
       var url = URL.createObjectURL(file), im = new Image();
@@ -106,44 +196,127 @@
         c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k);
         var x = c.getContext('2d'); x.fillStyle = '#0D0F13'; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
         URL.revokeObjectURL(url);
-        c.toBlob(function (b) { b ? res(b) : rej({ error: 'resize' }); }, 'image/jpeg', 0.86);
+        c.toBlob(function (b) { b ? res(b) : rej({ message: 'resize' }); }, 'image/jpeg', 0.86);
       };
-      im.onerror = function () { URL.revokeObjectURL(url); rej({ error: 'unreadable' }); };
+      im.onerror = function () { URL.revokeObjectURL(url); rej({ message: 'unreadable' }); };
       im.src = url;
     });
   }
-  function b64(blob) { return new Promise(function (res) { var r = new FileReader(); r.onload = function () { res(String(r.result).split(',')[1]); }; r.readAsDataURL(blob); }); }
-  $('enter').addEventListener('click', function () {
-    key = $('pw').value; $('login-msg').textContent = 'Checking…';
-    post({ op: 'check' }).then(function () {
-      try { sessionStorage.setItem('pnp-desk', key); } catch (e) {}
-      return load().then(function (list) { items = list; $('login').hidden = true; $('desk').hidden = false; $('bar').hidden = false; render(); status(''); });
-    }).catch(function (e) {
-      $('login-msg').textContent = e && e.error === 'wrong-password' ? 'Wrong password.' : e && e.error === 'no-password-set' ? 'No password is set yet in Netlify (GALLERY_PASSWORD).' : 'The photo desk is not available on this copy of the site.';
-    });
-  });
-  $('pw').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('enter').click(); });
-  try { var saved = sessionStorage.getItem('pnp-desk'); if (saved) { $('pw').value = saved; $('enter').click(); } } catch (e) {}
+  function fileName() {
+    var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return 'photo-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
+  }
   $('file').addEventListener('change', function () {
     var files = Array.prototype.slice.call($('file').files || []); $('file').value = '';
     files.forEach(function (f) {
-      var it = { busy: true, cap: '', preview: URL.createObjectURL(f) };
-      items.push(it); busy++; dirty = true; render(); status('Uploading…');
-      shrink(f).then(function (blob) { return b64(blob); }).then(function (data) { return post({ op: 'upload', type: 'image/jpeg', data: data }); })
-        .then(function (r) { if (r.src) it.src = r.src; else it.id = r.id; it.busy = false; })
-        .catch(function () { items.splice(items.indexOf(it), 1); status('A photo could not be uploaded. Try again.', true); })
-        .then(function () { busy--; render(); if (!busy && !$('status').classList.contains('err')) status('Uploaded. Press Publish to show them on the website.'); });
+      var name = fileName();
+      var it = { busy: true, cap: '', preview: URL.createObjectURL(f), src: '/gallery/' + name, path: IMG_DIR + name, blob: 'pending' };
+      items.unshift(it); busy++; touch(); render(); status('Uploading…');
+      shrink(f).then(function (blob) { return blob.arrayBuffer(); })
+        .then(function (buf) { return gh('/git/blobs', { method: 'POST', body: { content: b64e(buf), encoding: 'base64' } }); })
+        .then(function (r) { it.blob = r.sha; it.busy = false; })
+        .catch(function () { var i = items.indexOf(it); if (i > -1) items.splice(i, 1); status('A photo could not be uploaded. Check the internet and try again.', true); })
+        .then(function () { busy--; render(); if (!busy && !$('status').classList.contains('err')) status('Uploaded. Write captions, then press Publish.'); });
     });
   });
+
+  // ---------- publish: one commit with the new photos, removals and the new list ----------
+  function publishOnce() {
+    var list = items.map(function (x) { return { src: x.src, caption: String(x.cap || '').trim() }; });
+    var headSha;
+    return gh('/git/ref/heads/' + BRANCH).then(function (ref) { headSha = ref.object.sha; return gh('/git/commits/' + headSha); })
+      .then(function (commit) {
+        var tree = [{ path: LIST_PATH, mode: '100644', type: 'blob', content: JSON.stringify(list, null, 2) + '\n' }];
+        items.forEach(function (x) { if (x.blob && x.blob !== 'pending') tree.push({ path: x.path, mode: '100644', type: 'blob', sha: x.blob }); });
+        removed.forEach(function (src) { tree.push({ path: DIR + src, mode: '100644', type: 'blob', sha: null }); });
+        return gh('/git/trees', { method: 'POST', body: { base_tree: commit.tree.sha, tree: tree } });
+      })
+      .then(function (t) { return gh('/git/commits', { method: 'POST', body: { message: 'Update gallery from the photo desk', tree: t.sha, parents: [headSha] } }); })
+      .then(function (c) { return gh('/git/refs/heads/' + BRANCH, { method: 'PATCH', body: { sha: c.sha } }); });
+  }
   $('publish').addEventListener('click', function () {
     if (busy) { status('Wait for the uploads to finish.', true); return; }
     $('publish').disabled = true; status('Publishing…');
-    var out = items.map(function (x) { var cap = String(x.cap || '').trim(); return x.id ? { id: x.id, cap: cap } : { src: x.src, cap: cap }; });
-    post({ op: 'save', items: out }).then(function () { dirty = false; status('Published. The gallery on the website is updated.'); })
-      .catch(function () { status('Could not publish. Check the connection and try again.', true); })
-      .then(function () { $('publish').disabled = false; });
+    publishOnce().catch(function (e) {
+      if (e && (e.status === 422 || e.status === 409)) return publishOnce();   // someone else changed the site at the same moment: try once more
+      throw e;
+    }).then(function () {
+      items.forEach(function (x) { delete x.blob; delete x.path; });
+      removed = []; dirty = false; render();
+      status('Published. The website gallery updates in about 1–2 minutes.');
+    }).catch(function (e) {
+      if (e && removed.length && e.status === 422) { removed = []; }
+      status(e && (e.status === 401 || e.status === 403) ? 'The GitHub key no longer works. The website owner must set up the desk again.' : 'Could not publish. Check the internet and try again.', true);
+    }).then(function () { $('publish').disabled = false; });
+  });
+
+  // ---------- login / setup ----------
+  function openDesk() {
+    try { sessionStorage.setItem('pnp-desk-gh', token); } catch (e) {}
+    show('desk'); status('Loading the gallery…');
+    return loadList().catch(function (e) {
+      if (e && (e.status === 401 || e.status === 403 || e.status === 404)) { token = ''; try { sessionStorage.removeItem('pnp-desk-gh'); } catch (x) {} show(keyFile ? 'login' : 'setup'); say(keyFile ? 'login-msg' : 'setup-msg', 'The GitHub key no longer works. The website owner must set up the desk again with a new key.', true); return; }
+      status('Could not load the gallery. Check the internet and reload the page.', true);
+    });
+  }
+  $('enter').addEventListener('click', function () {
+    var pw = $('pw').value; if (!pw) return;
+    $('enter').disabled = true; say('login-msg', 'Checking…');
+    unlock(keyFile, pw).then(function (t) { token = t; say('login-msg', ''); return openDesk(); })
+      .catch(function () { say('login-msg', 'Wrong password.', true); })
+      .then(function () { $('enter').disabled = false; });
+  });
+  $('pw').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('enter').click(); });
+  $('to-setup').addEventListener('click', function () { show('setup'); $('to-login').hidden = false; });
+  $('to-login').addEventListener('click', function () { show('login'); });
+
+  function checkPw(a, b) { if (a.length < 10) return 'The password must be at least 10 characters.'; if (a !== b) return 'The two passwords are not the same.'; return ''; }
+  $('do-setup').addEventListener('click', function () {
+    var tok = $('tok').value.trim(), p1 = $('np1').value, p2 = $('np2').value;
+    if (!/^(github_pat_|ghp_)/.test(tok)) { say('setup-msg', 'Paste the GitHub key. It starts with github_pat_', true); return; }
+    var bad = checkPw(p1, p2); if (bad) { say('setup-msg', bad, true); return; }
+    $('do-setup').disabled = true; say('setup-msg', 'Checking the key…');
+    token = tok;
+    gh('/contents/' + LIST_PATH + '?ref=' + BRANCH)
+      .then(function () { say('setup-msg', 'Saving…'); return lock(tok, p1); })
+      .then(function (kf) { keyFile = kf; return saveKeyFile(kf, 'Set up the photo desk'); })
+      .then(function () { $('tok').value = $('np1').value = $('np2').value = ''; say('setup-msg', ''); return openDesk(); })
+      .catch(function (e) {
+        token = '';
+        say('setup-msg', e && (e.status === 401) ? 'This key is not valid. Copy it again from GitHub.' :
+          e && (e.status === 403 || e.status === 404) ? 'This key cannot change the website. Check step 3 (this repository) and step 4 (Contents: Read and write).' :
+          'Something went wrong. Check the internet and try again.', true);
+      })
+      .then(function () { $('do-setup').disabled = false; });
+  });
+
+  $('chg-pw').addEventListener('click', function () { $('chg').hidden = !$('chg').hidden; });
+  $('do-chg').addEventListener('click', function () {
+    var p1 = $('cp1').value, p2 = $('cp2').value, bad = checkPw(p1, p2);
+    if (bad) { say('chg-msg', bad, true); return; }
+    $('do-chg').disabled = true; say('chg-msg', 'Saving…');
+    lock(token, p1).then(function (kf) { keyFile = kf; return saveKeyFile(kf, 'Change the photo desk password'); })
+      .then(function () { $('cp1').value = $('cp2').value = ''; say('chg-msg', 'Saved. Use the new password from now on (it works in about 2 minutes).'); })
+      .catch(function () { say('chg-msg', 'Could not save. Try again.', true); })
+      .then(function () { $('do-chg').disabled = false; });
+  });
+  $('logout').addEventListener('click', function () {
+    if (dirty && !window.confirm('You have changes that are not published. Log out anyway?')) return;
+    token = ''; dirty = false; try { sessionStorage.removeItem('pnp-desk-gh'); } catch (e) {}
+    $('pw').value = ''; show(keyFile ? 'login' : 'setup');
   });
   window.addEventListener('beforeunload', function (e) { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  // ---------- start ----------
+  if (!/\/$/.test(location.pathname) && !/\.html$/.test(location.pathname)) { location.replace(location.pathname + '/' + location.search); return; }
+  if (!window.isSecureContext || !window.crypto || !crypto.subtle) { $('insecure').hidden = false; return; }
+  fetch('key.json?v=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (kf) {
+    keyFile = kf && kf.data ? kf : null;
+    var saved = ''; try { saved = sessionStorage.getItem('pnp-desk-gh') || ''; } catch (e) {}
+    if (saved) { token = saved; openDesk(); return; }
+    show(keyFile ? 'login' : 'setup');
+    if (keyFile) $('pw').focus();
+  });
 })();
 </script>
 </body>
